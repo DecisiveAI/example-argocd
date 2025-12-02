@@ -1,13 +1,8 @@
-global:
-  tolerations:
-    - key: karpenter.sh/controller
-      operator: Exists
-      effect: NoSchedule
 controller:
   resources:
     limits:
       cpu: 500m
-      memory: 512Mi
+      memory: 640Mi
 dex:
   resources:
     limits:
@@ -31,7 +26,7 @@ server:
 repoServer:
   resources:
     limits:
-      cpu: 500m
+      cpu: 250m
       memory: 512Mi
 applicationSet:
   resources:
