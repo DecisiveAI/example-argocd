@@ -1,0 +1,55 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: Ephemeral
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  TF_CLI_ARGS: "-input=false"
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-24.04
+    environment: Ephemeral
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v5.0.0
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          role-session-name: ExampleArgoCDDeployJob
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Update kubeconfig
+        run: aws eks --region ${{ vars.AWS_REGION }} update-kubeconfig --name  ${{ vars.CLUSTER_NAME }}
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ">= 1.13" # Don't forget to update terraform.tf
+          terraform_wrapper: true
+      - name: Terraform Init
+        run: terraform init -backend-config="bucket=${{ vars.BACKEND_BUCKET }}" -backend-config="key=${{ vars.BACKEND_KEY_PATH }}"
+      - name: Terraform Plan
+        id: plan
+        env:
+          TF_VAR_aws_region: ${{ vars.AWS_REGION }}
+          TF_VAR_cluster_name: ${{ vars.CLUSTER_NAME }}
+          TF_VAR_argocd_gh_app_id: ${{ secrets.ARGOCD_GH_APP_ID }}
+          TF_VAR_argocd_gh_app_installation_id: ${{ secrets.ARGOCD_GH_APP_INSTALLATION_ID }}
+          TF_VAR_argocd_gh_app_private_key: ${{ secrets.ARGOCD_GH_APP_PRIVATE_KEY }}
+        run: terraform plan -no-color -compact-warnings -out tfplan
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+      - name: Apply ArgoCD Config
+        working-directory: argocd
+        run: kubectl apply --server-side -f apps.yaml

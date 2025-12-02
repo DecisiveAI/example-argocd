@@ -1,0 +1,125 @@
+name: Validate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+    branches:
+      - main
+    paths:
+      - 'terraform/**'
+
+concurrency:
+  group: Ephemeral
+
+permissions:
+  pull-requests: write
+  contents: read
+  id-token: write
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-24.04
+    if: contains(github.event.pull_request.labels.*.name, 'ready-to-validate')
+    environment: Ephemeral
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v5.0.0
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          role-session-name: BenchmarkValidateJob
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ">= 1.13" # Don't forget to update terraform.tf
+          terraform_wrapper: true
+      - name: Terraform Init
+        run: terraform init -input=false -backend-config="bucket=${{ vars.BACKEND_BUCKET }}" -backend-config="key=${{ vars.BACKEND_KEY_PATH }}"
+      - name: Terraform Validate
+        run: terraform validate
+      - name: Terraform Plan
+        id: plan
+        env:
+          TF_VAR_aws_region: ${{ vars.AWS_REGION }}
+          TF_VAR_cluster_name: ${{ vars.CLUSTER_NAME }}
+          TF_VAR_argocd_gh_app_id: ${{ secrets.ARGOCD_GH_APP_ID }}
+          TF_VAR_argocd_gh_app_installation_id: ${{ secrets.ARGOCD_GH_APP_INSTALLATION_ID }}
+          TF_VAR_argocd_gh_app_private_key: ${{ secrets.ARGOCD_GH_APP_PRIVATE_KEY }}
+        run: |
+          terraform plan -input=false -no-color -compact-warnings -out tfplan
+      - name: Vulnerability Scanner
+        id: scanner
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          version: v0.65.0
+          scan-type: config
+          scan-ref: tfplan
+          hide-progress: true
+          output: trivy.txt
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+        continue-on-error: true
+      - name: Publish Scanner Output to Summary
+        run: |
+          if [[ -s trivy.txt ]]; then
+            {
+              echo "### Security Output"
+              echo "<details><summary>Click to expand</summary>"
+              echo ""
+              echo '```terraform'
+              cat trivy.txt
+              echo '```'
+              echo "</details>"
+            } >> $GITHUB_STEP_SUMMARY
+          fi
+      - name: Vulnerability Scanner Status
+        if: steps.scanner.outcome == 'failure'
+        run: exit 1
+      - name: Publish Terraform Plan
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // 1. Retrieve existing bot comments for the PR
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            })
+            const botComment = comments.find(comment => {
+              return comment.user.type === 'Bot' && comment.body.includes('Terraform Plan')
+            })
+
+            // 2. Prepare format of the comment
+            const output = `#### Terraform Plan 📖
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${{ steps.plan.outputs.stdout }}
+            \`\`\`
+
+            </details>`;
+
+            // 3. If we have a comment, update it, otherwise create a new one
+            if (botComment) {
+              github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: output
+              })
+            } else {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: output
+              })
+            }

@@ -1,0 +1,47 @@
+global:
+  tolerations:
+    - key: karpenter.sh/controller
+      operator: Exists
+      effect: NoSchedule
+controller:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+dex:
+  resources:
+    limits:
+      cpu: 50m
+      memory: 64Mi
+redis:
+  resources:
+    limits:
+      cpu: 200m
+      memory: 128Mi
+redisSecretInit:
+  resources:
+    limits:
+      cpu: 200m
+      memory: 128Mi
+server:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+repoServer:
+  resources:
+    limits:
+      cpu: 50m
+      memory: 128Mi
+applicationSet:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+notifications:
+  secret:
+    create: false
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
