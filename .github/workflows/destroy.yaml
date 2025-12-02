@@ -1,6 +1,9 @@
 name: Destroy
 
-on: 
+on:
+  push:
+    branches:
+      - ENG-941
   workflow_dispatch:
 
 concurrency:
