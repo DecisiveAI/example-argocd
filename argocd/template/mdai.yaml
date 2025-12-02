@@ -16,19 +16,21 @@ spec:
     targetRevision: ENG-941
     path: argocd/mdai/chart
     ref: values
-  - repoURL: https://github.com/DecisiveAI/example-argocd.git
-    targetRevision: ENG-941
-    path: argocd/mdai/kustomize
   destination:
     name: "in-cluster"
     namespace: mdai
   syncPolicy:
-    automated:
-      enabled: true
-      prune: true
     syncOptions:
     - PruneLast=true
     - CreateNamespace=true
+    - ServerSideApply=true
     retry:
-      limit: 4
-  # ignoreDifferences:
+      limit: 1
+  ignoreDifferences:
+    - group: apps
+      kind: StatefulSet
+      jsonPointers:
+        - /spec/volumeClaimTemplates
+    - kind: ConfigMap
+      jsonPointers:
+        - /data/DEPLOY_TIMESTAMP

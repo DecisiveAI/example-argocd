@@ -6,6 +6,3 @@ resources:
 - hub.yaml
 - observer.yaml
 - otel.yaml
-
-commonAnnotations:
-  argocd.argoproj.io/sync-wave: "1"
