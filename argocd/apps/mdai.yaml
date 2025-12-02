@@ -20,6 +20,9 @@ spec:
     name: "in-cluster"
     namespace: mdai
   syncPolicy:
+    automated:
+      enabled: true
+      prune: true
     syncOptions:
     - PruneLast=true
     - CreateNamespace=true

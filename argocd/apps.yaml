@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/DecisiveAI/example-argocd.git
     targetRevision: ENG-941
-    path: argocd/template
+    path: argocd/apps
   destination:
     name: "in-cluster"
     namespace: argocd
