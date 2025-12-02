@@ -20,6 +20,13 @@ mdai-gateway:
 mdai-s3-logs-reader:
   enabled: false
 
+valkey:
+  enabled: true
+  auth:
+    enabled: true
+    existingSecret: valkey-secret
+    existingSecretPasswordKey: VALKEY_PASSWORD
+
 nats:
   config:
     jetstream:
