@@ -47,7 +47,7 @@ variable "argocd_namespace" {
 variable "argocd_version" {
   description = "Helm chart version of ArgoCD"
   type        = string
-  default     = "8.5.0"
+  default     = "9.1.5"
 }
 
 variable "argocd_repo_url" {
