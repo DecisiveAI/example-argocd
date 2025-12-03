@@ -56,30 +56,6 @@ variable "argocd_repo_url" {
   default     = "https://github.com/DecisiveAI"
 }
 
-variable "argocd_gh_cred" {
-  description = "ArgoCD GitHub Credential Secret Name"
-  type        = string
-  default     = "argocd-gh-app-cred"
-}
-
-variable "argocd_gh_app_id" {
-  description = "ArgoCD GitHub App ID"
-  type        = string
-  sensitive   = true
-}
-
-variable "argocd_gh_app_installation_id" {
-  description = "ArgoCD GitHub App installation ID"
-  type        = string
-  sensitive   = true
-}
-
-variable "argocd_gh_app_private_key" {
-  description = "ArgoCD GitHub App Private Key"
-  type        = string
-  sensitive   = true
-}
-
 #EBS CSI Driver
 variable "ebs_csi_driver_iam" {
   description = "IAM role name to allow EBS CSI driver to do its thing"

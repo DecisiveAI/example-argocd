@@ -20,7 +20,4 @@ module "aws_eks_addons" {
   oidc_provider                      = module.aws_eks.oidc_provider
   oidc_provider_arn                  = module.aws_eks.oidc_provider_arn
   cluster_certificate_authority_data = module.aws_eks.cluster_certificate_authority_data
-  argocd_gh_app_id                   = var.argocd_gh_app_id
-  argocd_gh_app_installation_id      = var.argocd_gh_app_installation_id
-  argocd_gh_app_private_key          = var.argocd_gh_app_private_key
 }
