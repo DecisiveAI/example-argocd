@@ -10,8 +10,5 @@ on:
 
 jobs:
   pr-title:
-    permissions:
-      pull-requests: write
-      statuses: write
-    uses: DecisiveAI/changelogs/.github/workflows/reusable-semantic-pr-title.yaml@main
+    uses: DecisiveAI/changelogs/.github/workflows/reusable-semantic-pr-title.yaml@tv/perms
     secrets: inherit # pass all secrets
