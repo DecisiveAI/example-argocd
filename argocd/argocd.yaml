@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mdai-apps
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DecisiveAI/example-argocd.git
+    targetRevision: HEAD
+    path: argocd/apps
+  destination:
+    name: "in-cluster"
+    namespace: argocd
+  syncPolicy:
+    automated:
+      enabled: true
+      prune: true

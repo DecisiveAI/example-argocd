@@ -1,0 +1,20 @@
+{
+  "controller":{
+    "tolerations": [
+      {
+        "key": "karpenter.sh/controller",
+        "operator": "Exists",
+        "effect": "NoSchedule"
+      }
+    ]
+  },
+  "node":{
+    "tolerations": [
+      {
+        "key": "karpenter.sh/controller",
+        "operator": "Exists",
+        "effect": "NoSchedule"
+      }
+    ]
+  }
+}

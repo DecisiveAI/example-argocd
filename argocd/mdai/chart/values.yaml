@@ -1,0 +1,28 @@
+persistentStorage:
+  nats:
+    pv:
+      create: false # Let EBS CSI create the PV for us 
+
+mdai-operator:
+  controllerManager:
+    manager:
+      env:
+        otelSdkDisabled: "true"
+
+mdai-gateway:
+  otelSdkDisabled: "true"
+
+mdai-s3-logs-reader:
+  enabled: false
+
+nats:
+  config:
+    jetstream:
+      enabled: true
+      fileStore:
+        enabled: true
+        dir: "/data/jetstream"
+        pvc:
+          enabled: true
+          storageClassName: gp2
+          size: 1Gi

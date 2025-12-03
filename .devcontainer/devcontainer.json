@@ -1,0 +1,53 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+	"name": "ExampleArgoCD",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+		"ghcr.io/devcontainers/features/aws-cli:1": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+			"version": "latest",
+			"helm": "latest",
+			"minikube": "none"
+		},
+		"ghcr.io/devcontainers/features/terraform:1": {},
+		"ghcr.io/devcontainers-extra/features/argo-cd:1": {},
+		"ghcr.io/devcontainers-extra/features/kind:1": {},
+		"ghcr.io/devcontainers/features/go:1": {
+			"version": "latest"
+		}
+	},
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+	],
+
+	"postCreateCommand": "ssh-add && go env -w GOPROXY=https://proxy.golang.org,direct && go install github.com/tilt-dev/ctlptl/cmd/ctlptl@latest && curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash",
+
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			// Bug fix on Mac: https://github.com/microsoft/vscode-remote-release/issues/8169
+			"settings": {
+				"extensions.verifySignature": false
+			},
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"eamodio.gitlens",
+				"codezombiech.gitignore",
+				"usernamehw.errorlens",
+				"visualstudioexptteam.vscodeintellicode"
+			]
+		}
+	}
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
