@@ -13,10 +13,10 @@ spec:
     targetRevision: 0.9.0-dev
     helm:
       valueFiles:
-      # - $values/argocd/mdai/chart/local-values.yaml # Uncomment to test this locally
       - $values/argocd/mdai/chart/values.yaml
+      - $values/argocd/mdai/chart/local-values.yaml
   - repoURL: https://github.com/DecisiveAI/example-argocd.git
-    targetRevision: HEAD
+    targetRevision: local
     path: argocd/mdai/chart
     ref: values
   destination:

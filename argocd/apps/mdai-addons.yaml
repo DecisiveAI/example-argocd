@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/DecisiveAI/example-argocd.git
-    targetRevision: HEAD
+    targetRevision: local
     path: argocd/mdai/kustomize
   destination:
     name: "in-cluster"
