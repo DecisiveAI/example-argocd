@@ -32,11 +32,11 @@ spec:
     - ServerSideApply=true
     retry:
       limit: 2
-  ignoreDifferences:
-    - group: apps
-      kind: StatefulSet
-      jsonPointers:
-        - /spec/volumeClaimTemplates
-    - kind: ConfigMap
-      jsonPointers:
-        - /data/DEPLOY_TIMESTAMP
+#  ignoreDifferences:
+#    - group: apps
+#      kind: StatefulSet
+#      jsonPointers:
+#        - /spec/volumeClaimTemplates
+#    - kind: ConfigMap
+#      jsonPointers:
+#        - /data/DEPLOY_TIMESTAMP
