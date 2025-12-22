@@ -1,13 +1,3 @@
-persistentStorage:
-  nats:
-    pv:
-      # Specifies whether a PersistentVolumes should be created
-      create: true
-      # Deployment platform: can be either "aws" or "kind" (for local development))
-      platform: kind
-      # directory where data will be stored if deployment platform is "kind"
-      localPath: "/workspaces/work/kind/data"
-
 mdai-operator:
   controllerManager:
     manager:
@@ -36,3 +26,5 @@ nats:
           enabled: true
           storageClassName: "mdai"
           size: 1Gi
+          apiVersion: v1
+          kind: PersistentVolumeClaim
