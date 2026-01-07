@@ -54,7 +54,7 @@ variable "argocd_version" {
 variable "ebs_csi_driver_iam" {
   description = "IAM role name to allow EBS CSI driver to do its thing"
   type        = string
-  default     = "ebs_csi_driver-irsa"
+  default     = "ebs_csi_driver-irsa-example-argocd"
 }
 
 variable "ebs_csi_driver_policy_arn" {
