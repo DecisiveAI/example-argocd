@@ -16,7 +16,7 @@ spec:
       # - $values/argocd/mdai/chart/local-values.yaml # Uncomment to test this locally
       - $values/argocd/mdai/chart/values.yaml
   - repoURL: https://github.com/DecisiveAI/example-argocd.git
-    targetRevision: fix-iam-name
+    targetRevision: HEAD
     path: argocd/mdai/chart
     ref: values
   destination:
@@ -33,10 +33,10 @@ spec:
     retry:
       limit: 2
   ignoreDifferences:
-    # - group: apps
-    #   kind: StatefulSet
-    #   jsonPointers:
-    #     - /spec/volumeClaimTemplates
+    - group: apps
+      kind: StatefulSet
+      jsonPointers:
+        - /spec/volumeClaimTemplates
     - kind: ConfigMap
       jsonPointers:
         - /data/DEPLOY_TIMESTAMP
