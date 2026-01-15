@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/DecisiveAI/example-argocd.git
-    targetRevision: local
+    targetRevision: test/argo-cd-example
     path: argocd/apps
   destination:
     name: "in-cluster"

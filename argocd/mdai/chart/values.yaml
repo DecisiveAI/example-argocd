@@ -1,9 +1,9 @@
 persistentStorage:
   nats:
     pv:
-      create: false # Let EBS CSI create the PV for us 
+      create: false # Let EBS CSI create the PV for us
       platform: kind
-      storageClass: mdai
+      storageClass: standard
       size: 1Gi
 
 mdai-operator:

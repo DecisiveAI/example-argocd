@@ -10,13 +10,13 @@ spec:
   sources:
   - repoURL: oci://ghcr.io/decisiveai/mdai-hub
     chart: mdai
-    targetRevision: 0.9.0-dev
+    targetRevision: 0.9.2-dev
     helm:
       valueFiles:
-      - $values/argocd/mdai/chart/values.yaml
+      # - $values/argocd/mdai/chart/values.yaml
       - $values/argocd/mdai/chart/local-values.yaml
   - repoURL: https://github.com/DecisiveAI/example-argocd.git
-    targetRevision: local
+    targetRevision: test/argo-cd-example
     path: argocd/mdai/chart
     ref: values
   destination:

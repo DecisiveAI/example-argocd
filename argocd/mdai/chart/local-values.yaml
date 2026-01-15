@@ -24,7 +24,7 @@ nats:
         dir: "/data/jetstream"
         pvc:
           enabled: true
-          storageClassName: "mdai"
+          storageClassName: "standard"
           size: 1Gi
           apiVersion: v1
           kind: PersistentVolumeClaim
