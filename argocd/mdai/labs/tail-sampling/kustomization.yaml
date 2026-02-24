@@ -3,12 +3,16 @@ kind: Kustomization
 resources:
 - ../../catalog/globals/base/collector
 - ../../catalog/globals/base/mdaihub
-- resources/observer.yaml
-- resources/dynamic-filtration-params-configmap.yaml
+- resources/loadbalancer-rbac.yaml
+- resources/loadbalancer-role-binding.yaml
+- resources/loadbalancer-collector.yaml
+- resources/scrape-trace-count-metrics.yaml
+- resources/trace-sampling-params-configmap.yaml
+
 replacements:
 - source:
     kind: ConfigMap
-    name: dynamic-filtration-params
+    name: tail-sampling-hub-name-params
     fieldPath: data.HUB_NAME
   targets:
   - select:
@@ -26,7 +30,7 @@ replacements:
 
 - source:
     kind: ConfigMap
-    name: dynamic-filtration-params
+    name: tail-sampling-hub-name-params
     fieldPath: data.HUB_VARS_CM
   targets:
   - select:
@@ -39,7 +43,7 @@ replacements:
 
 - source:
     kind: ConfigMap
-    name: dynamic-filtration-params
+    name: tail-sampling-hub-name-params
     fieldPath: data.GATEWAY_NAME
   targets:
   - select:
@@ -49,6 +53,6 @@ replacements:
     - metadata.name
 
 patches:
-- path: patches/hub-spec.yaml
+- path: resources/hub-spec.yaml
 - path: patches/collector-envfrom.yaml
 - path: patches/collector.yaml

@@ -1,22 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mdai-apps
+  name: mdai-datadog
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   project: default
   source:
     repoURL: https://github.com/MyDecisive/example-argocd.git
     targetRevision: feat/mdai-labs
-    path: argocd/apps/
-    directory:
-      recurse: true
+    path: argocd/mdai/labs/datadog
   destination:
     name: in-cluster
-    namespace: argocd
+    namespace: mdai
   syncPolicy:
     automated:
+      enabled: true
       prune: true
       selfHeal: true
+    syncOptions:
+    - PruneLast=true
+    - ServerSideApply=true

@@ -27,10 +27,10 @@ Environment changes are explicit, reviewable in Git, and applied deterministical
 
 | Layer | Application | Definition source | What it does | Source paths |
 |------|-------------|------------------|--------------|--------------|
-| 1 | **mdai-apps** | `argocd/argocd.yaml` | App-of-apps bootstrap | Dev: `argocd/apps/dev/**`<br>Prod (opt-in): `argocd/apps/prod/**` via `argocd/argocd-prod.yaml` |
-| 2 | **mdai** | `argocd/apps/dev/mdai.yaml` | Platform install (Helm) | Installs CRDs and controllers required by MyDecisive |
-| 3 | **mdai-global-config-<env>** | Dev: `argocd/apps/dev/mdai-globals.yaml`<br>Prod: `argocd/apps/prod/mdai-globals-prod.yaml` | Global baseline configuration | `argocd/mdai/live/<env>/global` |
-| 4 | **mdai-team-<team>-<env>** | Dev: `argocd/apps/dev/teams/*.yaml`<br>Prod: `argocd/apps/prod/*-prod.yaml` | Team-scoped bundle | `argocd/mdai/live/<env>/teams/<team>` |
+| 1 | **mdai-apps** | `argocd/argocd.yaml` | App-of-apps bootstrap | Dev: `argocd/apps/**`<br>Prod (opt-in): `argocd/apps/prod/**` via `argocd/argocd-prod.yaml` |
+| 2 | **mdai** | `argocd/apps/mdai.yaml` | Platform install (Helm) | Installs CRDs and controllers required by MyDecisive |
+| 3 | **mdai-global-config-<env>** | Dev: `argocd/apps/mdai-globals.yaml`<br>Prod: `argocd/apps/prod/mdai-globals-prod.yaml` | Global baseline configuration | `argocd/mdai/live/<env>/global` |
+| 4 | **mdai-team-<team>-<env>** | Dev: `argocd/apps/teams/*.yaml`<br>Prod: `argocd/apps/prod/*-prod.yaml` | Team-scoped bundle | `argocd/mdai/live/<env>/teams/<team>` |
 
 
 **Design Principle**

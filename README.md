@@ -32,10 +32,10 @@ Alternatively, you can also use the provided [devcontainer](./.devcontainer/devc
 #### Run Everything
 
 ```
-kind create cluster --name local-cluster
+kind create cluster --name mdai-argo-labs
 ```
 
-Before running the following command, remember to update [mdai.yaml](./argocd/apps/dev/mdai.yaml) to use `local-values.yaml`:
+Before running the following command, remember to update [mdai.yaml](./argocd/apps/mdai.yaml) to use `local-values.yaml`:
 
 ```
 tilt up
@@ -47,7 +47,7 @@ You'll be able to access the ArgoCD UI via `localhost:1443` and you can follow [
 
 This repo provides terraform configs to setup an EKS cluster that will allow you to try things out inside EKS.
 
-[An example deployment GitHub workflow](https://github.com/DecisiveAI/example-argocd/actions/workflows/deploy.yaml) is also provided to showcase how to deploy the terraform configs to AWS using GitHub workflow.
+[An example deployment GitHub workflow](https://github.com/MyDecisive/example-argocd/actions/workflows/deploy.yaml) is also provided to showcase how to deploy the terraform configs to AWS using GitHub workflow.
 
 Once this repo is deployed to EKS, run:
 
@@ -59,7 +59,7 @@ To access the ArgoCD UI via `localhost:1443` and follow [Login To ArgoCD UI](#lo
 
 ### Login To ArgoCD UI
 
-> [!NOTE]  
+> [!NOTE]
 > Depend on the browser, it might warn you about accessing the ArgoCD UI due to certificate issues.
 > It is expected and normal, just confirm you want to access the website anyways.
 
@@ -70,7 +70,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ```
 
 ## Dev vs Prod
-By default, this repo enables **dev** Argo CD Applications only (under `argocd/apps/dev`).
+By default, this repo enables **dev** Argo CD Applications only (under `argocd/apps`).
 
 To enable production Applications, apply:
 ```sh

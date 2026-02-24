@@ -2,7 +2,7 @@
 
 This repo is configured so **dev deploys automatically** and **prod is manual/safe by default**.
 
-- Dev apps live under: `argocd/apps/dev/`
+- Dev apps live under: `argocd/apps/`
 - Prod apps live under: `argocd/apps/prod/`
 - Prod is enabled by applying: `argocd/argocd-prod.yaml`
 

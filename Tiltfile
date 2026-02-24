@@ -1,13 +1,13 @@
 load('ext://helm_remote', 'helm_remote')
 
 allow_k8s_contexts([
-    'local-cluster',
+    'mdai-argo-labs',
     'kind'
 ])
 
 # ArgoCD
-helm_remote('argo-cd', 
-  repo_url='https://argoproj.github.io/argo-helm', 
+helm_remote('argo-cd',
+  repo_url='https://argoproj.github.io/argo-helm',
   version='9.1.5',
   namespace='argocd',
   create_namespace=True

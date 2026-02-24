@@ -15,7 +15,7 @@ This repo is structured so that:
 
 ## Environment enablement (dev-only by default)
 Argo CD is configured to sync **dev** applications by default from:
-- `argocd/apps/dev/`
+- `argocd/apps/`
 
 Production applications are defined but **not enabled** by default:
 - `argocd/apps/prod/`

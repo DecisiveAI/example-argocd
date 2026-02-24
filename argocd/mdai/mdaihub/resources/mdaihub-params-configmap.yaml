@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mdaihub-params
+  namespace: mdai
+data:
+  HUB_NAME: mdaihub

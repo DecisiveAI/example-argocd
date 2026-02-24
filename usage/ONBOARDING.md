@@ -24,7 +24,7 @@ kustomize build argocd/mdai/live/<env>/teams/team-payments
 ## Day 7 (Add a team)
 1) Copy team overlay + live bundle
 2) Set `HUB_NAME` and `HUB_VARS_CM` in the team params ConfigMap
-3) Add an Argo Application under `argocd/apps/dev/teams/` (dev is enabled by default)
+3) Add an Argo Application under `argocd/apps/teams/` (dev is enabled by default)
 
 > If/when you later enable production (see root README), add a corresponding prod Application under `argocd/apps/prod/`.
 4) Preview + PR

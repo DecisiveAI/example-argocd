@@ -1,0 +1,24 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: mdai-tail-sampling
+#   namespace: argocd
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "5"
+# spec:
+#   project: default
+#   source:
+#     repoURL: https://github.com/MyDecisive/example-argocd.git
+#     targetRevision: feat/mdai-labs
+#     path: argocd/mdai/labs/tail-sampling
+#   destination:
+#     name: in-cluster
+#     namespace: mdai
+#   syncPolicy:
+#     automated:
+#       enabled: true
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#     - PruneLast=true
+#     - ServerSideApply=true

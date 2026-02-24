@@ -3,12 +3,12 @@ kind: Kustomization
 resources:
 - ../../catalog/globals/base/collector
 - ../../catalog/globals/base/mdaihub
-- resources/observer.yaml
-- resources/dynamic-filtration-params-configmap.yaml
+- ../../catalog/globals/base
+- resources/pii-params-configmap.yaml
 replacements:
 - source:
     kind: ConfigMap
-    name: dynamic-filtration-params
+    name: pii-params
     fieldPath: data.HUB_NAME
   targets:
   - select:
@@ -26,7 +26,7 @@ replacements:
 
 - source:
     kind: ConfigMap
-    name: dynamic-filtration-params
+    name: pii-params
     fieldPath: data.HUB_VARS_CM
   targets:
   - select:
@@ -39,7 +39,7 @@ replacements:
 
 - source:
     kind: ConfigMap
-    name: dynamic-filtration-params
+    name: pii-params
     fieldPath: data.GATEWAY_NAME
   targets:
   - select:

@@ -1,0 +1,31 @@
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: gateway
+  namespace: mdai
+spec:
+  config:
+    processors:
+      transform/scrub_pii_fields:
+        error_mode: propagate
+        log_statements:
+          - context: log
+            statements:
+              # Redact credit card numbers (keep last 4 digits)
+              - 'replace_pattern(attributes["cc"], "${env:CC_REGEX}", "${env:CC_TEMPLATE}")'
+    exporters:
+      debug/verbose:
+        verbosity: detailed
+        sampling_initial: 5
+        sampling_thereafter: 200
+    service:
+      pipelines:
+        logs/customer_pipeline:
+          processors: [
+            transform/scrub_pii_fields,
+            memory_limiter,
+            batch,
+          ]
+          exporters: [
+            debug/verbose,
+          ]

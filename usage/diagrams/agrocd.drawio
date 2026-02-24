@@ -13,7 +13,7 @@
         <mxCell id="3" value="&lt;b&gt;Bootstrap app&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;(argocd/argocd.yaml)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;arcSize=0;fontSize=14;fontFamily=Architects Daughter;" parent="tRN4Z8qV4LfODeKZFpYf-13" vertex="1">
           <mxGeometry x="285" y="180" width="260" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="4" value="&lt;b&gt;Applications (dev)&lt;br&gt;&lt;/b&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;(argocd/apps/dev/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;arcSize=0;fontSize=14;fontFamily=Architects Daughter;" parent="tRN4Z8qV4LfODeKZFpYf-13" vertex="1">
+        <mxCell id="4" value="&lt;b&gt;Applications (dev)&lt;br&gt;&lt;/b&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;(argocd/apps/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;arcSize=0;fontSize=14;fontFamily=Architects Daughter;" parent="tRN4Z8qV4LfODeKZFpYf-13" vertex="1">
           <mxGeometry x="465" y="340" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="5" value="Deploys dev&lt;br&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;(live/dev/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;arcSize=0;fontSize=14;fontFamily=Architects Daughter;" parent="tRN4Z8qV4LfODeKZFpYf-13" vertex="1">

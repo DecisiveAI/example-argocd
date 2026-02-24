@@ -42,13 +42,13 @@ Review [Layers](./ARCHITECTURE.md#layers-in-argo-cd)
 
 | Symptom                                     | Likely cause                                | What to check                                                                     | Fix                                                     |
 | ------------------------------------------- | ------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| Child Applications not appearing in Argo CD | `mdai-apps` bootstrap misconfigured         | `mdai-apps` `source.path` is `argocd/apps/dev` and directory recursion is enabled | Fix path or enable `directory.recurse: true`            |
+| Child Applications not appearing in Argo CD | `mdai-apps` bootstrap misconfigured         | `mdai-apps` `source.path` is `argocd/apps` and directory recursion is enabled | Fix path or enable `directory.recurse: true`            |
 | Applications on different branches          | `targetRevision` mismatch                   | All Applications should reference the same branch/tag                             | Align `targetRevision` across all Applications          |
 | Deployments break after template rename     | Kustomize replacement selectors out of date | Replacement selectors still reference old hub/collector names                     | Update replacement selectors to match renamed templates |
 
 ### Quick checklist (optional runbook version)
 
-[ ] Verify mdai-apps points to argocd/apps/dev with directory recursion enabled
+[ ] Verify mdai-apps points to argocd/apps with directory recursion enabled
 
 [ ] Confirm all Argo CD Applications use the same targetRevision
 

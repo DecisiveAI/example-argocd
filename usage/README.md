@@ -27,7 +27,7 @@ Everything under `argocd/mdai/catalog/**` is a library and has no effect unless 
 
 | Application name               | Type / role               | What it does                                                             | Source path                           |
 | ------------------------------ | ------------------------- | ------------------------------------------------------------------------ | ------------------------------------- |
-| **`mdai-apps`**                | App-of-apps (bootstrap)   | Discovers and creates child Applications for **dev** by default          | `argocd/apps/dev/**`                  |
+| **`mdai-apps`**                | App-of-apps (bootstrap)   | Discovers and creates child Applications for **dev** by default          | `argocd/apps/**`                  |
 | **`mdai`**                     | Platform install          | Installs platform components (Helm charts, operators, controllers, CRDs) | Platform chart source                 |
 | **`mdai-global-config-<env>`** | Environment global config | Applies environment-wide configuration and shared resources              | `argocd/mdai/live/<env>/global`       |
 | **`mdai-team-<team>-<env>`**   | Team bundle               | Deploys all workloads and overrides for a single team in an environment  | `argocd/mdai/live/<env>/teams/<team>` |
@@ -44,7 +44,7 @@ Everything under `argocd/mdai/catalog/**` is a library and has no effect unless 
 | Aspect                | Dev                                   | Prod                           |
 | --------------------- | ------------------------------------- | ------------------------------ |
 | Bootstrap Application | `mdai-apps`                           | `mdai-apps-prod`               |
-| Discovery path        | `argocd/apps/dev/**`                  | `argocd/apps/prod/**`          |
+| Discovery path        | `argocd/apps/**`                  | `argocd/apps/prod/**`          |
 | Enabled by default    | ✅ Yes                                 | ❌ No (explicitly enabled)      |
 | Sync mode             | **Automated** (auto-sync + self-heal) | **Manual only**                |
 | Self-healing          | Enabled                               | Disabled                       |

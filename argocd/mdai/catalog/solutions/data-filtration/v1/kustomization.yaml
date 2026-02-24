@@ -1,6 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-# Data-filtration uses case-specific CR contracts (hub/observer/collector monitor)
-resources:
-  - ../../../globals/contracts/data-filtration

@@ -1,0 +1,48 @@
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: gateway
+  namespace: mdai
+spec:
+  env:
+  - name: API_KEY
+    valueFrom:
+      secretKeyRef:
+        name: datadog-secret
+        key: api-key
+  config:
+    receivers:
+      datadog:
+        endpoint: 0.0.0.0:8126
+
+    connectors:
+      datadog/connector:
+        traces:
+          trace_buffer: 1000  # default
+
+    exporters:
+      datadog:
+        api:
+          site: us5.datadoghq.com
+          key: ${API_KEY}
+
+    service:
+      pipelines:
+        logs/datadog:
+          receivers: [ datadog ]
+          processors: [ batch ]
+          exporters: [ datadog ]
+        traces:
+          # ensure metrics are computed before sampling, ensuring their accuracy
+          receivers: [datadog]
+          processors: [batch]
+          exporters: [datadog/connector]
+        traces/datadog:
+          receivers: [datadog/connector]
+          processors: [batch]
+          exporters: [datadog]
+        metrics:
+          receivers: [datadog/connector]
+          processors: [batch]
+          exporters: [datadog]
+

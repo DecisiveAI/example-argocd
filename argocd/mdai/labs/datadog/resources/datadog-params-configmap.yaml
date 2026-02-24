@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: datadog-params
+  namespace: mdai
+data:
+  HUB_NAME: mdaihub
+  HUB_VARS_CM: mdaihub-variables
+  GATEWAY_NAME: gateway-datadog
