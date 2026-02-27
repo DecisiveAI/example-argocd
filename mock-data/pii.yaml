@@ -199,7 +199,7 @@ data:
       <store>
         @type forward
         <server>
-          host gateway-collector.mdai.svc.cluster.local
+          host gateway-pii-collector.mdai.svc.cluster.local
           port 8006
         </server>
         <buffer>
