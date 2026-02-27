@@ -60,7 +60,7 @@ spec:
             - |
               NS="mdai"
               SECRET_NAME="valkey-secret"
-              DEPLOYMENTS_TO_RESTART="mdai-operator-controller-manager mdai-gateway"
+              DEPLOYMENTS_TO_RESTART="mdai-operator-controller-manager mdai-gateway mdai-event-hub"
               STATE_CM="mdai-operator-secret-rollout-state"
               TRACKED_CONFIGMAPS="mdaihub-variables mdaihub-manual-variables"
 
