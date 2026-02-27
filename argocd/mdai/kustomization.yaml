@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- catalog/globals/base/mdaihub
+- mdaihub/resources/mdaihub-params-configmap.yaml
+replacements:
+- source:
+    kind: ConfigMap
+    name: mdaihub-params
+    fieldPath: data.HUB_NAME
+  targets:
+  - select:
+      kind: MdaiHub
+      name: mdaihub-template
+    fieldPaths:
+    - metadata.name
+patches:
+- target:
+    kind: MdaiHub
+    name: mdaihub-template
+  path: patches/hub-init.json
+- target:
+    kind: MdaiHub
+    name: mdaihub-template
+  path: labs/dynamic-filtration/patches/hub-spec.json
+- target:
+    kind: MdaiHub
+    name: mdaihub-template
+  path: labs/pii/patches/hub-spec.json
+- target:
+    kind: MdaiHub
+    name: mdaihub-template
+  path: labs/tail-sampling/patches/hub-spec.json

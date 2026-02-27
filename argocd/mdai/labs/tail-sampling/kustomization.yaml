@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../catalog/globals/base/collector
-- ../../catalog/globals/base/mdaihub
 - resources/loadbalancer-rbac.yaml
 - resources/loadbalancer-role-binding.yaml
 - resources/loadbalancer-collector.yaml
@@ -12,14 +11,9 @@ resources:
 replacements:
 - source:
     kind: ConfigMap
-    name: tail-sampling-hub-name-params
+    name: trace-sampling-params
     fieldPath: data.HUB_NAME
   targets:
-  - select:
-      kind: MdaiHub
-      name: mdaihub-template
-    fieldPaths:
-    - metadata.name
   - select:
       kind: OpenTelemetryCollector
       name: gateway
@@ -30,7 +24,7 @@ replacements:
 
 - source:
     kind: ConfigMap
-    name: tail-sampling-hub-name-params
+    name: trace-sampling-params
     fieldPath: data.HUB_VARS_CM
   targets:
   - select:
@@ -43,7 +37,7 @@ replacements:
 
 - source:
     kind: ConfigMap
-    name: tail-sampling-hub-name-params
+    name: trace-sampling-params
     fieldPath: data.GATEWAY_NAME
   targets:
   - select:
@@ -53,6 +47,5 @@ replacements:
     - metadata.name
 
 patches:
-- path: resources/hub-spec.yaml
 - path: patches/collector-envfrom.yaml
 - path: patches/collector.yaml

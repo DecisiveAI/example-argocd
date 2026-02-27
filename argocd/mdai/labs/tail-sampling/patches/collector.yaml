@@ -71,8 +71,7 @@ spec:
       debug/to_vendor: {}
     service:
       pipelines:
-        logs/customer_pipeline:
+        traces/customer_pipeline:
           receivers: [otlp/from_lb]
           processors: [memory_limiter, tail_sampling, batch]
           exporters: [debug/to_vendor]
-

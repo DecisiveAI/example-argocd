@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../catalog/globals/base/collector
-- ../../catalog/globals/base/mdaihub
 - resources/observer.yaml
 - resources/dynamic-filtration-params-configmap.yaml
 replacements:
@@ -11,11 +10,6 @@ replacements:
     name: dynamic-filtration-params
     fieldPath: data.HUB_NAME
   targets:
-  - select:
-      kind: MdaiHub
-      name: mdaihub-template
-    fieldPaths:
-    - metadata.name
   - select:
       kind: OpenTelemetryCollector
       name: gateway
@@ -49,6 +43,5 @@ replacements:
     - metadata.name
 
 patches:
-- path: patches/hub-spec.yaml
 - path: patches/collector-envfrom.yaml
 - path: patches/collector.yaml

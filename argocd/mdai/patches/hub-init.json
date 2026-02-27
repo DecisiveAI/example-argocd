@@ -1,0 +1,9 @@
+- op: add
+  path: /spec/variables
+  value: []
+- op: add
+  path: /spec/prometheusAlerts
+  value: []
+- op: add
+  path: /spec/rules
+  value: []

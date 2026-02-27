@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../catalog/globals/base/collector
-- ../../catalog/globals/base/mdaihub
 - resources/datadog-params-configmap.yaml
 replacements:
 - source:
@@ -10,11 +9,6 @@ replacements:
     name: datadog-params
     fieldPath: data.HUB_NAME
   targets:
-  - select:
-      kind: MdaiHub
-      name: mdaihub-template
-    fieldPaths:
-    - metadata.name
   - select:
       kind: OpenTelemetryCollector
       name: gateway
