@@ -60,19 +60,29 @@ spec:
             - |
               NS="mdai"
               SECRET_NAME="valkey-secret"
-              DEPLOYMENT_NAME="mdai-operator-controller-manager"
+              DEPLOYMENTS_TO_RESTART="mdai-operator-controller-manager mdai-gateway"
               STATE_CM="mdai-operator-secret-rollout-state"
+              TRACKED_CONFIGMAPS="mdaihub-variables mdaihub-manual-variables"
 
-              current_rv="$(kubectl -n "${NS}" get secret "${SECRET_NAME}" -o jsonpath='{.metadata.resourceVersion}')"
-              previous_rv="$(kubectl -n "${NS}" get configmap "${STATE_CM}" -o jsonpath='{.data.resourceVersion}' 2>/dev/null || true)"
+              secret_rv="$(kubectl -n "${NS}" get secret "${SECRET_NAME}" -o jsonpath='{.metadata.resourceVersion}')"
+              cm_rvs=""
+              for cm in ${TRACKED_CONFIGMAPS}; do
+                cm_rv="$(kubectl -n "${NS}" get configmap "${cm}" -o jsonpath='{.metadata.resourceVersion}' 2>/dev/null || echo missing)"
+                cm_rvs="${cm_rvs}${cm}:${cm_rv};"
+              done
 
-              if [ "${current_rv}" = "${previous_rv}" ]; then
-                echo "No secret change detected."
+              current_fingerprint="secret:${SECRET_NAME}:${secret_rv};${cm_rvs}"
+              previous_fingerprint="$(kubectl -n "${NS}" get configmap "${STATE_CM}" -o jsonpath='{.data.fingerprint}' 2>/dev/null || true)"
+
+              if [ "${current_fingerprint}" = "${previous_fingerprint}" ]; then
+                echo "No tracked change detected."
                 exit 0
               fi
 
-              echo "Secret change detected (${previous_rv} -> ${current_rv}); restarting ${DEPLOYMENT_NAME}."
-              kubectl -n "${NS}" rollout restart deployment "${DEPLOYMENT_NAME}"
+              echo "Change detected; restarting deployments: ${DEPLOYMENTS_TO_RESTART}"
+              for d in ${DEPLOYMENTS_TO_RESTART}; do
+                kubectl -n "${NS}" rollout restart deployment "${d}"
+              done
               kubectl -n "${NS}" create configmap "${STATE_CM}" \
-                --from-literal=resourceVersion="${current_rv}" \
+                --from-literal=fingerprint="${current_fingerprint}" \
                 --dry-run=client -o yaml | kubectl apply -f -
