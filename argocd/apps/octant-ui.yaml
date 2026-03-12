@@ -13,9 +13,7 @@ spec:
     targetRevision: 0.1.0
     helm:
       values: |
-        image:
-          repository: ghcr.io/mydecisive/octant-ui
-          tag: 0.1.0
+        gateway_host: http://mdai-gateway.mdai.svc.cluster.local:8081
   destination:
     name: "in-cluster"
     namespace: mdai
