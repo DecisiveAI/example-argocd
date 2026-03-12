@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: octant-ui
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  project: default
+  source:
+    repoURL: oci://ghcr.io/mydecisive/charts/octant-ui
+    chart: octant-ui
+    targetRevision: 0.1.0
+    helm:
+      values: |
+        image:
+          repository: ghcr.io/mydecisive/octant-ui
+          tag: 0.1.0
+  destination:
+    name: "in-cluster"
+    namespace: mdai
+  syncPolicy:
+    automated:
+      enabled: true
+      prune: true
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    retry:
+      limit: 4
