@@ -37,7 +37,7 @@ kubectl get all -n mdai
 Port-forward to your machine
 
 ```bash
-kubectl port-forward svc/octant-ui -n mdai 8080:80
+kubectl port-forward svc/octant-ui -n mdai 8080:8080
 ```
 
 Open: `http://localhost:8080`
