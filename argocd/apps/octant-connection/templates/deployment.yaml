@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-envoy
   labels:
-    app: {{ .Release.Name }}
+    app: {{ .Release.Name }}-envoy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: {{ .Release.Name }}-envoy
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: {{ .Release.Name }}-envoy
       annotations:
         # This ensures the pod restarts if the ConfigMap changes
         checksum/config: {{ tpl (.Files.Get "files/envoy.yaml") . | sha256sum }}
