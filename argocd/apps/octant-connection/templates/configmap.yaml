@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-envoy-config
+data:
+  envoy.yaml: |
+{{ tpl (.Files.Get "files/envoy.yaml") . | indent 4 }}
+    

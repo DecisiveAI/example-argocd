@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-primary-collector-service
+  labels:
+    app: {{ .Release.Name }}-primary-collector
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.ingressPort }}
+      targetPort: {{ .Values.ingressPort }}
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ .Release.Name }}-primary-collector

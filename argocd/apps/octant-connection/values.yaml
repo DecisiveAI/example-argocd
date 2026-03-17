@@ -1,0 +1,4 @@
+envoy:
+  image: "envoyproxy/envoy:v1.37.1"
+
+ingressPort: 8126

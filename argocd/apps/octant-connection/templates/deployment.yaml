@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+      annotations:
+        # This ensures the pod restarts if the ConfigMap changes
+        checksum/config: {{ tpl (.Files.Get "files/envoy.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: envoy
+          image: {{ .Values.envoy.image }}
+          ports:
+            - containerPort: {{ .Values.ingressPort }}
+          volumeMounts:
+            - name: envoy-config-volume
+              mountPath: /etc/envoy/envoy.yaml
+              subPath: envoy.yaml
+      volumes:
+        - name: envoy-config-volume
+          configMap:
+            name: {{ .Release.Name }}-envoy-config
