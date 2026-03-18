@@ -41,7 +41,7 @@ static_resources:
               address:
                 socket_address:
                   # Uses value if present, otherwise defaults to the release-named service
-                  address: {{ default (printf "%s-primary-collector-service" .Release.Name) }}
+                  address: {{ default (printf "%s-primary-collector" .Release.Name) }}
                   port_value: {{ .Values.ingressPort }}
                   
     - name: shadow_collector
@@ -55,5 +55,5 @@ static_resources:
               address:
                 socket_address:
                   # Uses value if present, otherwise defaults to the release-named service
-                  address: {{ default (printf "%s-shadow-collector-service" .Release.Name) }}
+                  address: {{ default (printf "%s-shadow-collector" .Release.Name) }}
                   port_value: {{ .Values.ingressPort }}
