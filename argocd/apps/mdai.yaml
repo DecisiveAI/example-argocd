@@ -10,12 +10,12 @@ spec:
   sources:
   - repoURL: oci://ghcr.io/mydecisive/mdai-hub
     chart: mdai
-    targetRevision: 0.9.3-dev
+    targetRevision: 0.9.3-envoy
     helm:
       valueFiles:
       - $values/argocd/mdai/chart/local-values.yaml
   - repoURL: https://github.com/MyDecisive/example-argocd.git
-    targetRevision: feat/mdai-labs
+    targetRevision: rlaw/mdai-labs-plus-envoy-hub-chart
     path: argocd/mdai/chart
     ref: values
   destination:
