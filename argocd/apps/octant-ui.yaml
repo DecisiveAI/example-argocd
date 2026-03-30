@@ -12,9 +12,8 @@ spec:
     chart: octant-ui
     targetRevision: 0.1.0
     helm:
-      values: |
-        deployment:
-          gateway_host: http://mdai-gateway.mdai.svc.cluster.local:8081
+      valueFiles:
+        - $values/argocd/octant/values.yaml
   destination:
     name: "in-cluster"
     namespace: mdai
