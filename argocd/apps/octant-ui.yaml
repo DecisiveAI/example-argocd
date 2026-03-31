@@ -7,16 +7,21 @@ metadata:
     argocd.argoproj.io/sync-wave: "3"
 spec:
   project: default
-  source:
-    repoURL: oci://ghcr.io/mydecisive/charts/octant-ui
-    chart: octant-ui
-    targetRevision: 0.1.0
-    helm:
-      valueFiles:
-        - $values/argocd/octant/values.yaml
+  sources:
+    - repoURL: oci://ghcr.io/mydecisive/charts/octant-ui
+      chart: octant-ui
+      targetRevision: 0.1.0
+      helm:
+        valueFiles:
+          - $values/argocd/octant/values.yaml
+        # - $values/argocd/octant/local-values.yaml
+    - repoURL: https://github.com/MyDecisive/example-argocd.git
+      targetRevision: HEAD
+      path: argocd/octant
+      ref: values
   destination:
     name: "in-cluster"
-    namespace: mdai
+    namespace: octant
   syncPolicy:
     automated:
       enabled: true
