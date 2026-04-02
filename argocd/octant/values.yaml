@@ -7,6 +7,7 @@ deployment:
   affinity: {}
   annotations: {}
   gateway_host: http://mdai-gateway.mdai.svc.cluster.local:8081
+  argocd_host: https://argo-cd-argocd-server.argocd.svc.cluster.local
 
 image:
   repository: ghcr.io/mydecisive/octant-ui
