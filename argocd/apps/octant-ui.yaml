@@ -14,9 +14,8 @@ spec:
       helm:
         valueFiles:
           - $values/argocd/octant/values.yaml
-        # - $values/argocd/octant/local-values.yaml
     - repoURL: https://github.com/MyDecisive/example-argocd.git
-      targetRevision: HEAD
+      targetRevision: sp/octant-ui
       path: argocd/octant
       ref: values
   destination:

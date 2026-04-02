@@ -41,9 +41,3 @@ kubectl port-forward svc/octant-ui -n mdai 8080:8080
 ```
 
 Open: `http://localhost:8080`
-
-For local UI development, switch [octant-ui.yaml](../apps/octant-ui.yaml) to use `$values/argocd/octant/local-values.yaml`, then build and load your image into `kind`:
-
-```bash
-kind load docker-image octant-ui:0.1.0 -n local-cluster
-```
