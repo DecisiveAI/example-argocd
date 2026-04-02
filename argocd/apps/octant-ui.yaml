@@ -10,7 +10,7 @@ spec:
   sources:
     - repoURL: oci://ghcr.io/mydecisive/charts/octant-ui
       chart: octant-ui
-      targetRevision: 0.1.0
+      targetRevision: 0.1.1
       helm:
         valueFiles:
           - $values/argocd/octant/values.yaml
