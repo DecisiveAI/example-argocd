@@ -15,7 +15,7 @@ spec:
         valueFiles:
           - $values/argocd/octant/values.yaml
     - repoURL: https://github.com/MyDecisive/example-argocd.git
-      targetRevision: sp/octant-ui
+      targetRevision: feat/octant-ui
       path: argocd/octant
       ref: values
   destination:
