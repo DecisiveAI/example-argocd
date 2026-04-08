@@ -18,6 +18,13 @@ spec:
     targetRevision: rlaw/mdai-labs-plus-envoy-hub-chart
     path: argocd/mdai/chart
     ref: values
+  - repoURL: oci://ghcr.io/mydecisive/charts/octant-ui
+    chart: octant-ui
+    targetRevision: 0.1.1
+    helm:
+      parameters:
+        - name: deployment.gateway_host
+          value: http://mdai-gateway.mdai.svc.cluster.local:8081
   destination:
     name: "in-cluster"
     namespace: mdai
