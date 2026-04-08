@@ -8,9 +8,9 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: oci://ghcr.io/mydecisive/mdai-hub
-      chart: mdai
-      targetRevision: 0.9.0-dev
+    - repoURL: oci://ghcr.io/mydecisive/charts
+      chart: mdai-hub
+      targetRevision: 0.9.3-envoy
       helm:
         valueFiles:
           - $values/argocd/mdai/chart/local-values.yaml # Uncomment to test this locally
