@@ -1,4 +1,5 @@
 # ArgoCD Example Repository
+
 Example repository showcasing managing MDAI using ArgoCD
 
 ### Table of Contents
@@ -17,6 +18,7 @@ Example repository showcasing managing MDAI using ArgoCD
 #### Prerequisite
 
 Ensure you have the following installed:
+
 - [helm](https://helm.sh/docs/intro/install/)
 - [kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
@@ -60,6 +62,6 @@ To access the ArgoCD UI via `localhost:1443` and follow [Login To ArgoCD UI](#lo
 
 The username will be `admin` and you can grab the password by running:
 
-```sh
+```bash
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 ```

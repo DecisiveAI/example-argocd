@@ -22,10 +22,6 @@ helm upgrade --install argo-cd argo/argo-cd \
 
 ```bash
 kubectl apply -f argocd/argocd.yaml
-kubectl wait --for=create application/mdai -n argocd --timeout=120s
-kubectl patch application mdai -n argocd --type='json' \
-  -p='[{"op":"replace","path":"/spec/sources/0/targetRevision","value":"0.9.3-envoy"}]'
-kubectl annotate application mdai -n argocd argocd.argoproj.io/refresh=hard --overwrite
 ```
 
 If using Argo CLI:
