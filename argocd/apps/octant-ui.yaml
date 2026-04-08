@@ -20,7 +20,7 @@ spec:
       ref: values
   destination:
     name: "in-cluster"
-    namespace: octant
+    namespace: mdai
   syncPolicy:
     automated:
       enabled: true

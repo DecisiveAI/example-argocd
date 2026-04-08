@@ -13,7 +13,7 @@ spec:
       targetRevision: 0.9.3-envoy
       helm:
         valueFiles:
-          - $values/argocd/mdai/chart/local-values.yaml # Uncomment to test this locally
+          # - $values/argocd/mdai/chart/local-values.yaml # Uncomment to test this locally
           - $values/argocd/mdai/chart/values.yaml
     - repoURL: https://github.com/MyDecisive/example-argocd.git
       targetRevision: sp/octant-ui

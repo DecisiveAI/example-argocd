@@ -21,7 +21,7 @@ helm upgrade --install argo-cd argo/argo-cd \
 ## Apply the mdai and octant-ui Argo apps
 
 ```bash
-kubectl apply -f argocd/argocd.yaml
+kubectl apply -f argocd/apps/octant-ui.yaml
 ```
 
 If using Argo CLI:
