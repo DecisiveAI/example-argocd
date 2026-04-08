@@ -4,13 +4,28 @@ This guide deploys `octant-ui` from the hosted Helm chart in GHCR using Argo CD.
 
 ## Prereqs
 
-- Follow local cluster setup in [README](../../README.md)
-
-## 1. Apply the octant-ui Argo app
+## 1. Create Cluster, install Argo (Skip if have cluster w/ Argo)
 
 ```bash
-kubectl apply -f argocd/apps/octant-ui.yaml
-kubectl get application -n argocd
+kind create cluster --name mdai
+
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+
+helm upgrade --install argo-cd argo/argo-cd \
+  --version 9.1.5 \
+  --namespace argocd \
+  --create-namespace
+```
+
+## Apply the mdai and octant-ui Argo apps
+
+```bash
+kubectl apply -f argocd/argocd.yaml
+kubectl wait --for=create application/mdai -n argocd --timeout=120s
+kubectl patch application mdai -n argocd --type='json' \
+  -p='[{"op":"replace","path":"/spec/sources/0/targetRevision","value":"0.9.3-envoy"}]'
+kubectl annotate application mdai -n argocd argocd.argoproj.io/refresh=hard --overwrite
 ```
 
 If using Argo CLI:

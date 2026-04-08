@@ -8,17 +8,17 @@ metadata:
 spec:
   project: default
   sources:
-  - repoURL: oci://ghcr.io/mydecisive/mdai-hub
-    chart: mdai
-    targetRevision: 0.9.0-dev
-    helm:
-      valueFiles:
-      # - $values/argocd/mdai/chart/local-values.yaml # Uncomment to test this locally
-      - $values/argocd/mdai/chart/values.yaml
-  - repoURL: https://github.com/MyDecisive/example-argocd.git
-    targetRevision: HEAD
-    path: argocd/mdai/chart
-    ref: values
+    - repoURL: oci://ghcr.io/mydecisive/mdai-hub
+      chart: mdai
+      targetRevision: 0.9.0-dev
+      helm:
+        valueFiles:
+          - $values/argocd/mdai/chart/local-values.yaml # Uncomment to test this locally
+          - $values/argocd/mdai/chart/values.yaml
+    - repoURL: https://github.com/MyDecisive/example-argocd.git
+      targetRevision: sp/octant-ui
+      path: argocd/mdai/chart
+      ref: values
   destination:
     name: "in-cluster"
     namespace: mdai
@@ -27,9 +27,9 @@ spec:
       enabled: true
       prune: true
     syncOptions:
-    - PruneLast=true
-    - CreateNamespace=true
-    - ServerSideApply=true
+      - PruneLast=true
+      - CreateNamespace=true
+      - ServerSideApply=true
     retry:
       limit: 2
   ignoreDifferences:

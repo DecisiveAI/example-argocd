@@ -4,17 +4,17 @@ metadata:
   name: mdai-apps
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: https://github.com/MyDecisive/example-argocd.git
-    targetRevision: HEAD
+    targetRevision: sp/octant-ui
     path: argocd/apps
   destination:
     name: "in-cluster"
     namespace: argocd
   syncPolicy:
     automated:
-      enabled: true
+      enabled: false
       prune: true

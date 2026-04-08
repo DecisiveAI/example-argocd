@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/MyDecisive/example-argocd.git
-    targetRevision: HEAD
+    targetRevision: sp/octant-ui
     path: argocd/mdai/kustomize
   destination:
     name: "in-cluster"
@@ -19,6 +19,6 @@ spec:
       enabled: true
       prune: true
     syncOptions:
-    - PruneLast=true
+      - PruneLast=true
     retry:
       limit: 4

@@ -21,3 +21,14 @@ local_resource(
   resource_deps = ['argo-cd-argocd-server'])
 
 k8s_yaml("argocd/argocd.yaml")
+
+local_resource(
+  'patch-mdai-version',
+  '''
+  kubectl wait --for=create application/mdai -n argocd --timeout=120s
+  kubectl patch application mdai -n argocd --type=json \
+    -p='[{"op":"replace","path":"/spec/sources/0/targetRevision","value":"0.9.3-envoy"}]'
+  kubectl annotate application mdai -n argocd argocd.argoproj.io/refresh=hard --overwrite
+  ''',
+  resource_deps=['patch-argocd-cm', 'mdai-apps'],
+)
