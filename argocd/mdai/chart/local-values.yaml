@@ -6,6 +6,9 @@ mdai-operator:
 
 mdai-gateway:
   otelSdkDisabled: "true"
+  image:
+    repository: ghcr.io/mydecisive/charts/mdai-gateway
+    tag: 0.1.8
 
 mdai-s3-logs-reader:
   enabled: false
