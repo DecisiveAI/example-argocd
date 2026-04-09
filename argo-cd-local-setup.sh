@@ -4,7 +4,6 @@ set -e
 
 # --- Configuration ---
 NAMESPACE="argocd"
-SERVER="localhost:1443" # Updated to reflect your actual port
 ACCOUNT="apiUser"
 # ---------------------
 
@@ -19,14 +18,25 @@ kubectl patch configmap/argocd-rbac-cm -n "$NAMESPACE" \
   -p "{\"data\":{\"policy.csv\":\"g, $ACCOUNT, role:admin\n\"}}"
 
 echo "🔐 Step 3: Retrieving initial admin password..."
-ADMIN_PASSWORD=$(kubectl -n "$NAMESPACE" get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+# Note: If the initial secret was deleted, you must replace the command below with: ADMIN_PASSWORD="YourPassword"
+ADMIN_PASSWORD=$(kubectl -n "$NAMESPACE" get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" 2>/dev/null | base64 -d || echo "")
 
-echo "🔑 Step 4: Logging into ArgoCD CLI at $SERVER..."
-# Temporarily disable 'exit on error' so we can manually catch the failure
+if [ -z "$ADMIN_PASSWORD" ]; then
+    echo "⚠️  WARNING: Could not extract password. Please hardcode it in the script."
+    # Temporarily hardcode it here for the script to continue if you already changed it
+    ADMIN_PASSWORD="YOUR_ACTUAL_PASSWORD" 
+fi
+
+echo "🔑 Step 4: Logging into ArgoCD CLI (Bypassing Tilt via native port-forward)..."
 set +e
-LOGIN_OUTPUT=$(argocd login "$SERVER" --insecure --username admin --password "$ADMIN_PASSWORD" 2>&1)
+# We replace the SERVER IP with the built-in port-forwarding flags.
+# The CLI connects to a random argocd-server port using its own tunnel.
+LOGIN_OUTPUT=$(argocd login "argocd-server" \
+  --port-forward --port-forward-namespace "$NAMESPACE" \
+  --plaintext \
+  --username admin \
+  --password "$ADMIN_PASSWORD" 2>&1)
 LOGIN_EXIT_CODE=$?
-# Re-enable 'exit on error'
 set -e
 
 # Catch the error and print a helpful message
@@ -34,26 +44,25 @@ if [ $LOGIN_EXIT_CODE -ne 0 ]; then
     echo ""
     echo "❌ CONNECTION FAILED: Could not log into ArgoCD."
     echo "=================================================="
-    echo "The script could not reach ArgoCD at '$SERVER'."
-    echo "Ensure your port-forwarding is actively running in another terminal."
-    echo "Example: kubectl port-forward svc/argocd-server -n $NAMESPACE 1443:443"
-    echo "--------------------------------------------------"
     echo "Diagnostic Output from ArgoCD CLI:"
     echo "$LOGIN_OUTPUT"
-    echo "--------------------------------------------------"
-    echo "Since we successfully retrieved the password, here it is so you don't lose it:"
-    echo "👤 Admin Password: $ADMIN_PASSWORD"
+    echo "=================================================="
     exit 1
 fi
 
 echo "🎫 Step 5: Generating API token for '$ACCOUNT' (expires in 90 days)..."
-API_TOKEN=$(argocd account generate-token --account "$ACCOUNT" --expires-in 2160h)
+API_TOKEN=$(argocd account generate-token \
+  --account "$ACCOUNT" \
+  --port-forward --port-forward-namespace "$NAMESPACE" \
+  --plaintext \
+  --expires-in 2160h)
 
 echo ""
 echo "=================================================="
 echo "✅ Setup Complete!"
 echo "=================================================="
-echo "👤 Admin Password: $ADMIN_PASSWORD"
+echo "🌐 K8s Hostname:    argocd-server.$NAMESPACE.svc.cluster.local"
+echo "👤 Admin Password:  $ADMIN_PASSWORD"
 echo "🪙  API Token:      $API_TOKEN"
 echo "=================================================="
-echo "ℹ️  Your local ArgoCD CLI is now authenticated as admin and ready to use."
+echo "ℹ️  Your local CLI is authenticated. Note: Future shell commands will also require the --port-forward flag unless you log in via Tilt directly."
