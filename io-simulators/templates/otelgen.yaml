@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-otelgen-from
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: otelgen-from
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otelgen-from
+  template:
+    metadata:
+      labels:
+        app: otelgen-from
+    spec:
+      containers:
+        - name: otelgen
+          image: ghcr.io/krzko/otelgen:latest
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              while true; do
+                /otelgen --insecure --otel-exporter-otlp-endpoint {{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317 traces multi --rate 5 --duration 10
+                /otelgen --insecure --otel-exporter-otlp-endpoint {{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317 metrics --duration 10
+                /otelgen --insecure --otel-exporter-otlp-endpoint {{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317 logs --duration 10
+                sleep 2
+              done

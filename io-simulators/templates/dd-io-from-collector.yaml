@@ -1,0 +1,43 @@
+
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: {{ .Release.Name }}-dd-io-from
+  namespace: {{ .Release.Namespace }}
+spec:
+  config:
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+    processors:
+      batch:
+        send_batch_size: 100
+        timeout: 1s
+    exporters:
+      datadog:
+        api:
+          key: "dummy-key"
+          fail_on_invalid_key: false
+        # Point these to the ingress/service of your System Under Test
+        traces:
+          endpoint: "http://envoy-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
+        metrics:
+          endpoint: "http://envoy-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
+        logs:
+          endpoint: "http://envoy-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [datadog]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [datadog]
+        logs:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [datadog]
