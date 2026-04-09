@@ -25,6 +25,8 @@ spec:
       parameters:
         - name: deployment.gateway_host
           value: http://mdai-gateway.mdai.svc.cluster.local:8081
+        - name: envoy.service.port
+          value: "8126"
   destination:
     name: "in-cluster"
     namespace: mdai
