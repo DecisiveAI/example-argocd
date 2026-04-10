@@ -16,33 +16,54 @@ spec:
         app: otelgen-from
     spec:
       containers:
+        # ---------------------------------------------------------
+        # TRACES
+        # ---------------------------------------------------------
         - name: otelgen-traces
           image: ghcr.io/krzko/otelgen:latest
           args:
+            # Global Flags
             - "--insecure"
             - "--otel-exporter-otlp-endpoint"
             - "{{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317"
-            - "--rate"
-            - "5"
             - "--duration"
             - "0"
+            - "--rate"
+            - "2"
+            # Command & Subcommand
             - "traces"
             - "multi"
+
+        # ---------------------------------------------------------
+        # METRICS
+        # ---------------------------------------------------------
         - name: otelgen-metrics
           image: ghcr.io/krzko/otelgen:latest
           args:
+            # Global Flags
             - "--insecure"
             - "--otel-exporter-otlp-endpoint"
             - "{{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317"
             - "--duration"
             - "0"
+            - "--rate"
+            - "2"
+            # Command (Metrics does not require a subcommand)
             - "metrics"
+
+        # ---------------------------------------------------------
+        # LOGS
+        # ---------------------------------------------------------
         - name: otelgen-logs
           image: ghcr.io/krzko/otelgen:latest
           args:
+            # Global Flags
             - "--insecure"
             - "--otel-exporter-otlp-endpoint"
             - "{{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317"
             - "--duration"
             - "0"
+            - "--rate"
+            - "2"
+            # Command (Logs does not require a subcommand)
             - "logs"
