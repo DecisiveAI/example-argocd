@@ -8,7 +8,7 @@ argocd app create io-simulators \
   --helm-set connection-name=testy-one \
   --sync-policy none \
   --port-forward \
-  --port-forward-namespace="mdai" \
+  --port-forward-namespace="argocd" \
   --plaintext
 ```
 
@@ -16,5 +16,5 @@ argocd app create io-simulators \
 argocd app sync io-simulators \
   --plaintext \
   --port-forward \
-  --port-forward-namespace="mdai"
+  --port-forward-namespace="argocd"
 ```
