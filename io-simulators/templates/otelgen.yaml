@@ -22,27 +22,27 @@ spec:
             - "--insecure"
             - "--otel-exporter-otlp-endpoint"
             - "{{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317"
-            - "traces"
-            - "multi"
             - "--rate"
             - "5"
             - "--duration"
             - "0"
+            - "traces"
+            - "multi"
         - name: otelgen-metrics
           image: ghcr.io/krzko/otelgen:latest
           args:
             - "--insecure"
             - "--otel-exporter-otlp-endpoint"
             - "{{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317"
-            - "metrics"
             - "--duration"
             - "0"
+            - "metrics"
         - name: otelgen-logs
           image: ghcr.io/krzko/otelgen:latest
           args:
             - "--insecure"
             - "--otel-exporter-otlp-endpoint"
             - "{{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317"
-            - "logs"
             - "--duration"
             - "0"
+            - "logs"
