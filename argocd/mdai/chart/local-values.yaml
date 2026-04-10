@@ -31,3 +31,7 @@ nats:
           size: 1Gi
           apiVersion: v1
           kind: PersistentVolumeClaim
+
+envoy:
+  service:
+    port: 8126
