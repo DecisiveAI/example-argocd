@@ -26,13 +26,12 @@ spec:
             - "--insecure"
             - "--otel-exporter-otlp-endpoint"
             - "{{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317"
-            - "--duration"
-            - "0"
-            - "--rate"
-            - "2"
             # Command & Subcommand
             - "traces"
             - "multi"
+            # Command Flags (2 items/sec = ~120/min)
+            - "--rate"
+            - "2"
 
         # ---------------------------------------------------------
         # METRICS
@@ -44,12 +43,11 @@ spec:
             - "--insecure"
             - "--otel-exporter-otlp-endpoint"
             - "{{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317"
-            - "--duration"
-            - "0"
-            - "--rate"
-            - "2"
             # Command (Metrics does not require a subcommand)
             - "metrics"
+            # Command Flags (2 items/sec = ~120/min)
+            - "--rate"
+            - "2"
 
         # ---------------------------------------------------------
         # LOGS
@@ -61,9 +59,8 @@ spec:
             - "--insecure"
             - "--otel-exporter-otlp-endpoint"
             - "{{ .Release.Name }}-dd-io-from-collector.{{ .Release.Namespace }}.svc.cluster.local:4317"
-            - "--duration"
-            - "0"
-            - "--rate"
-            - "2"
             # Command (Logs does not require a subcommand)
             - "logs"
+            # Command Flags (2 items/sec = ~120/min)
+            - "--rate"
+            - "2"
