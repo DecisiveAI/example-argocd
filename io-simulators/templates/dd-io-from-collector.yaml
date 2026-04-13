@@ -20,7 +20,6 @@ spec:
         api:
           key: "dummy-key"
           fail_on_invalid_key: false
-        # Point these to the ingress/service of your System Under Test
         traces:
           endpoint: "http://envoy-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
         metrics:
@@ -28,6 +27,9 @@ spec:
         logs:
           endpoint: "http://envoy-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
     service:
+      telemetry:
+          resource:
+            simulator: "{{ .AppName }}-from-collector"
       pipelines:
         traces:
           receivers: [otlp]

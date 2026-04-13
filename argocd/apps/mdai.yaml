@@ -20,7 +20,7 @@ spec:
     ref: values
   - repoURL: oci://ghcr.io/mydecisive/charts/octant-ui
     chart: octant-ui
-    targetRevision: 0.1.1
+    targetRevision: 0.1.2
     helm:
       parameters:
         - name: deployment.gateway_host
