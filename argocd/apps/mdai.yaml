@@ -10,7 +10,7 @@ spec:
   sources:
   - repoURL: https://github.com/MyDecisive/mdai-hub.git
     targetRevision: rlaw/connection-prom-scrape
-    path: /
+    path: .
     helm:
       valueFiles:
       - $values/argocd/mdai/chart/local-values.yaml
