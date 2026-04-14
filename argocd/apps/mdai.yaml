@@ -9,7 +9,6 @@ spec:
   project: default
   sources:
   - repoURL: https://github.com/MyDecisive/mdai-hub.git
-    chart: mdai
     targetRevision: rlaw/connection-prom-scrape
     helm:
       valueFiles:
