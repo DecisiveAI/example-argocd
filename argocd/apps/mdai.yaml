@@ -8,9 +8,9 @@ metadata:
 spec:
   project: default
   sources:
-  - repoURL: oci://ghcr.io/mydecisive/charts/mdai-hub
+  - repoURL: https://github.com/MyDecisive/mdai-hub
     chart: mdai
-    targetRevision: 0.9.3-envoy
+    targetRevision: rlaw/connection-prom-scrape
     helm:
       valueFiles:
       - $values/argocd/mdai/chart/local-values.yaml
