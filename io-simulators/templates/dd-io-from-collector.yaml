@@ -12,6 +12,7 @@ spec:
           grpc:
             endpoint: 0.0.0.0:4317
     exporters:
+      debug: {}
       datadog:
         api:
           key: "dummy-key"
@@ -29,10 +30,10 @@ spec:
       pipelines:
         traces:
           receivers: [otlp]
-          exporters: [datadog]
+          exporters: [datadog,debug]
         metrics:
           receivers: [otlp]
-          exporters: [datadog]
+          exporters: [datadog,debug]
         logs:
           receivers: [otlp]
-          exporters: [datadog]
+          exporters: [datadog,debug]
