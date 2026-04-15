@@ -11,10 +11,6 @@ spec:
         protocols:
           grpc:
             endpoint: 0.0.0.0:4317
-    processors:
-      batch:
-        send_batch_size: 100
-        timeout: 1s
     exporters:
       datadog:
         api:
@@ -33,13 +29,10 @@ spec:
       pipelines:
         traces:
           receivers: [otlp]
-          processors: [batch]
           exporters: [datadog]
         metrics:
           receivers: [otlp]
-          processors: [batch]
           exporters: [datadog]
         logs:
           receivers: [otlp]
-          processors: [batch]
           exporters: [datadog]

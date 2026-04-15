@@ -9,10 +9,6 @@ spec:
       datadog:
         endpoint: 0.0.0.0:8126
         read_timeout: 60s
-    processors:
-      batch:
-        send_batch_size: 100
-        timeout: 1s
     exporters:
       debug: {}
     service:
@@ -22,13 +18,10 @@ spec:
       pipelines:
         traces:
           receivers: [datadog]
-          processors: [batch]
           exporters: [debug]
         metrics:
           receivers: [datadog]
-          processors: [batch]
           exporters: [debug]
         logs:
           receivers: [datadog]
-          processors: [batch]
           exporters: [debug]
