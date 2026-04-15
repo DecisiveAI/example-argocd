@@ -14,7 +14,7 @@ spec:
     service:
       telemetry:
           resource:
-            simulator: "{{ .Values.connection-name }}-to-collector"
+            simulator: "{{ .Values.connection_name }}-to-collector"
       pipelines:
         traces:
           receivers: [datadog]
