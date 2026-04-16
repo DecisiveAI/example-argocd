@@ -18,11 +18,11 @@ spec:
           key: "dummy-key"
           fail_on_invalid_key: false
         traces:
-          endpoint: "http://envoy-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
+          endpoint: "http://envoy-proxy-xds-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
         metrics:
-          endpoint: "http://envoy-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
+          endpoint: "http://envoy-proxy-xds-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
         logs:
-          endpoint: "http://envoy-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
+          endpoint: "http://envoy-proxy-xds-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
     service:
       telemetry:
           resource:
