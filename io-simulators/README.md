@@ -5,8 +5,9 @@ argocd app create io-simulators \
   --path io-simulators \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace mdai \
-  --helm-set connection-name=testy-one \
-  --sync-policy none \
+  --helm-set connection_name=testy-one \
+  --sync-policy automated \
+  --auto-prune \
   --port-forward \
   --port-forward-namespace="argocd" \
   --plaintext
