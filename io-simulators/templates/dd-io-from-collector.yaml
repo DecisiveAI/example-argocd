@@ -20,6 +20,7 @@ spec:
         traces:
           endpoint: "http://envoy-proxy-xds-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
         metrics:
+          resource_attributes_as_tags: true
           endpoint: "http://envoy-proxy-xds-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
         logs:
           endpoint: "http://envoy-proxy-xds-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
