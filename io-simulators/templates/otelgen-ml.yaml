@@ -36,8 +36,6 @@ spec:
             # Command & Subcommand
             - "metrics"
             - "sum"
-            - "--attribute"
-            - "host.name=$(NODE_NAME)"
 
         # ---------------------------------------------------------
         # LOGS
