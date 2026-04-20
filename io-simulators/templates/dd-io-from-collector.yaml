@@ -11,15 +11,11 @@ spec:
         protocols:
           grpc:
             endpoint: 0.0.0.0:4317
-    processors:
-      resource/add-metrics-host:
-        attributes:
-        - key: datadog.host.name
-          value: "metrics-node-a"
           action: insert
     exporters:
       debug: {}
       datadog:
+        hostname: metrics-node-a
         api:
           key: "dummy-key"
           fail_on_invalid_key: false
@@ -40,7 +36,6 @@ spec:
           exporters: [datadog,debug]
         metrics:
           receivers: [otlp]
-          processors: [resource/add-metrics-host]
           exporters: [datadog,debug]
         logs:
           receivers: [otlp]
