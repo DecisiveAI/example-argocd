@@ -26,8 +26,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            - name: OTEL_RESOURCE_ATTRIBUTES
-              value: "host.name=$(NODE_NAME)"
           args:
             # Global Flags
             - "--insecure"
@@ -38,6 +36,8 @@ spec:
             # Command & Subcommand
             - "metrics"
             - "sum"
+            - "attribute"
+            - "host.name=$(NODE_NAME)"
 
         # ---------------------------------------------------------
         # LOGS
