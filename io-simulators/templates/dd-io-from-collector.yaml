@@ -15,6 +15,10 @@ spec:
       transform/promote_hostname:
         error_mode: ignore
         metric_statements:
+          - context: metric
+            statements:
+              - set(resource.attributes["datadog.host.name"], attributes["host.name"]) where attributes["host.name"] != nil
+              - delete_key(attributes, "host.name") where attributes["host.name"] != nil
           - context: datapoint
             statements:
               - set(resource.attributes["datadog.host.name"], attributes["host.name"]) where attributes["host.name"] != nil
