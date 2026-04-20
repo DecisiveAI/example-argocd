@@ -14,6 +14,17 @@ spec:
     processors:
       resource/add-metrics-host:
         attributes:
+        - key: host
+          value: metrics-node-a
+          action: upsert
+        - key: datadog.host.name
+          value: metrics-node-a
+          action: upsert
+      attributes/add-metrics-host:
+        attributes:
+        - key: host
+          value: metrics-node-a
+          action: upsert
         - key: datadog.host.name
           value: metrics-node-a
           action: upsert
@@ -41,7 +52,7 @@ spec:
           exporters: [datadog,debug]
         metrics:
           receivers: [otlp]
-          processors: [resource/add-metrics-host]
+          processors: [attributes/add-metrics-host, resource/add-metrics-host]
           exporters: [datadog,debug]
         logs:
           receivers: [otlp]
