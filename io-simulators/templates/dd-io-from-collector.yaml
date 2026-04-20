@@ -11,6 +11,14 @@ spec:
         protocols:
           grpc:
             endpoint: 0.0.0.0:4317
+    processors:
+      transform/promote_hostname:
+        error_mode: ignore
+        metric_statements:
+          - context: datapoint
+            statements:
+              - set(resource.attributes["host.name"], attributes["host.name"]) where attributes["host.name"] != nil
+              - delete_key(attributes, "host.name") where attributes["host.name"] != nil
     exporters:
       debug: {}
       datadog:
@@ -34,6 +42,7 @@ spec:
           exporters: [datadog,debug]
         metrics:
           receivers: [otlp]
+          processors: [transform/promote_hostname]
           exporters: [datadog,debug]
         logs:
           receivers: [otlp]
