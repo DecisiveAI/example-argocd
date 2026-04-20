@@ -21,13 +21,13 @@ spec:
           value: metrics-node-a
           action: upsert
       attributes/add-metrics-host:
-        attributes:
-        - key: host
-          value: metrics-node-a
-          action: upsert
-        - key: datadog.host.name
-          value: metrics-node-a
-          action: upsert
+        actions:
+          - key: host
+            value: metrics-node-a
+            action: upsert
+          - key: datadog.host.name
+            value: metrics-node-a
+            action: upsert
     exporters:
       debug: {}
       datadog:
