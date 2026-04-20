@@ -17,7 +17,7 @@ spec:
         metric_statements:
           - context: datapoint
             statements:
-              - set(resource.attributes["host.name"], attributes["host.name"]) where attributes["host.name"] != nil
+              - set(resource.attributes["datadog.host.name"], attributes["host.name"]) where attributes["host.name"] != nil
               - delete_key(attributes, "host.name") where attributes["host.name"] != nil
     exporters:
       debug: {}
