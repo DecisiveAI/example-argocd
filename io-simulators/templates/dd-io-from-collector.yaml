@@ -36,12 +36,12 @@ spec:
           key: "dummy-key"
           fail_on_invalid_key: false
         traces:
-          endpoint: "http://envoy-proxy-xds-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
+          endpoint: "http://mdai-envoy.{{ .Release.Namespace }}.svc.cluster.local:8126"
         metrics:
           resource_attributes_as_tags: true
-          endpoint: "http://envoy-proxy-xds-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
+          endpoint: "http://mdai-envoy.{{ .Release.Namespace }}.svc.cluster.local:8126"
         logs:
-          endpoint: "http://envoy-proxy-xds-proxy.{{ .Release.Namespace }}.svc.cluster.local:8126"
+          endpoint: "http://mdai-envoy.{{ .Release.Namespace }}.svc.cluster.local:8126"
     service:
       telemetry:
           resource:
