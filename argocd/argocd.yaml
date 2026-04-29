@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/MyDecisive/example-argocd.git
-    targetRevision: HEAD
+    targetRevision: tv/ENG-1191
     path: argocd/apps
   destination:
     name: "in-cluster"
